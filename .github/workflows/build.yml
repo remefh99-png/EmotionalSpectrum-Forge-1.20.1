@@ -26,7 +26,15 @@ jobs:
       - name: Extract source files
         run: unzip -o src.zip -d .
       - name: Fix escaped newline in Java source
-        run: perl -0pi -e 's/\\\\n    public static String displayName/\n    public static String displayName/' src/main/java/com/remefh/emotionalspectrum/SpectrumLogic.java
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          p = Path("src/main/java/com/remefh/emotionalspectrum/SpectrumLogic.java")
+          s = p.read_text()
+          s = re.sub(r'\\+n(?=    public static String displayName)', '\\n', s)
+          p.write_text(s)
+          PY
       - name: Build mod
         run: gradle build --no-daemon
       - name: Upload mod JAR
