@@ -34,6 +34,12 @@ jobs:
           s = p.read_text()
           s = re.sub(r'\\+n(?=    public static String displayName)', '\\n', s)
           p.write_text(s)
+          logic = Path("src/main/java/com/remefh/emotionalspectrum/SpectrumLogic.java")
+          s = logic.read_text().replace("import net.minecraft.world.phys.ClipContext;", "import net.minecraft.world.level.ClipContext;")
+          logic.write_text(s)
+          hud = Path("src/main/java/com/remefh/emotionalspectrum/SpectrumHud.java")
+          s = hud.read_text().replace('event.registerAboveAll(new ResourceLocation(EmotionalSpectrum.MODID, "spectrum_hud"),', 'event.registerAboveAll("spectrum_hud",')
+          hud.write_text(s)
           PY
       - name: Build mod
         run: gradle build --no-daemon
