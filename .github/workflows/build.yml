@@ -25,6 +25,8 @@ jobs:
           gradle-version: '8.8'
       - name: Extract source files
         run: unzip -o src.zip -d .
+      - name: Fix escaped newline in Java source
+        run: perl -0pi -e 's/\\\\n    public static String displayName/\n    public static String displayName/' src/main/java/com/remefh/emotionalspectrum/SpectrumLogic.java
       - name: Build mod
         run: gradle build --no-daemon
       - name: Upload mod JAR
