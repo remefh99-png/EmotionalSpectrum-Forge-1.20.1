@@ -24,9 +24,13 @@ minecraft {
     }
 }
 
+repositories {
+    maven { url = 'https://maven.theillusivec4.top/' }
+    mavenCentral()
+}
+
 dependencies {
     minecraft 'net.minecraftforge:forge:1.20.1-47.4.20'
-    // Match the user's tested Forge 47.4.20 / Curios 5.14.1+1.20.1 environment.
     implementation fg.deobf('top.theillusivec4.curios:curios-forge:5.14.1+1.20.1')
 }
 
